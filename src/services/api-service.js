@@ -27,4 +27,5 @@ const fetchUrl = async (url) => {
 export const ApiService = {
   fetchUrl,
   fetchNews,
+  makeRequest
 }
