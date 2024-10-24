@@ -15,8 +15,6 @@ export const HeaderStyle = css`
     gap: 1rem;
   }
 
-
-
   header > div:last-of-type {
     width: 20em;
   }
