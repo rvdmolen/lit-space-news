@@ -6,36 +6,31 @@ export const NotificationStyle = css`
   :host {
     padding: 2em;
     display: block;
+    width: 75%;
   }
 
-  .info, .success, .warning, .error, .validation {
-    border: 1px solid;
+  .info, .warning, .error {
     padding: 1em;
-    opacity: 0.5;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
   }
 
   .info {
-    color: #00529B;
-    background-color: #BDE5F8;
-  }
-
-  .success {
-    color: #4F8A10;
-    background-color: #DFF2BF;
+    color: rgb(29 78 216);
+    background-color: rgb(219 234 254);
+    border-color: rgb(59 130 246);
   }
 
   .warning {
-    color: #9F6000;
-    background-color: #FEEFB3;
+    color: rgb(180 83 9);
+    background-color: rgb(254 243 199);
+    border-color: rgb(245 158 11 );
   }
 
   .error {
-    color: #D8000C;
-    background-color: #FFBABA;
+    color: rgb(185 28 28);
+    background-color: rgb(254 226 226);
+    border-color: rgb(239 68 68);
   }
 
-  .validation {
-    color: #D63301;
-    background-color: #FFCCBA;
-  }
 `;

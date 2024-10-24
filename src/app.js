@@ -14,7 +14,6 @@ export class LitSpaceNews extends LitElement {
     return css`
       :host {
         display: grid;
-        grid-template-rows: 5em 1fr;
         margin: 0 auto;
         text-align: center;
       }
@@ -30,7 +29,6 @@ export class LitSpaceNews extends LitElement {
   }
 
   async __handleSearchChange({detail}) {
-    console.log(detail.value)
     await this.spaceListNewsElement.fetchSpaceNews(detail.value);
   }
 
