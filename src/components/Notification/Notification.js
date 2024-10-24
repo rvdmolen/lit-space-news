@@ -19,7 +19,7 @@ export class Notification extends LitElement {
     const classes = { error: this.error, info: this.info, warning: this.warning };
     return html`
       <div class=${classMap(classes)}>
-        <slot></slot>
+        <p><slot></slot></p>
       </div>
     `
   }

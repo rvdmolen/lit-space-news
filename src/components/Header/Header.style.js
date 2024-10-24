@@ -12,10 +12,16 @@ export const HeaderStyle = css`
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
+    gap: 1rem;
+  }
+
+
+
+  header > div:last-of-type {
+    width: 20em;
   }
 
   div {
-    width: 20rem;
     box-sizing: border-box;
   }
 
@@ -25,12 +31,13 @@ export const HeaderStyle = css`
   }
 
   img {
-    width: 50px;
+    width: 30px;
   }
 
   .title {
     display: flex;
     gap: 0.5rem;
+    flex-grow: 1;
   }
 
   input {
@@ -45,6 +52,21 @@ export const HeaderStyle = css`
     outline-color: var(--blue);
     padding: 9px 4px 9px 40px;
     background: transparent url("/assets/search-white.svg") no-repeat 13px;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: right;
+
+    button {
+      width: 35px;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      display: flex;
+      background-color: light-dark(var(--white), var(--grey-dark));
+      cursor: pointer;
+    }
   }
 
   @media (prefers-color-scheme: light) {

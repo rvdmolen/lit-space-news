@@ -1,6 +1,13 @@
 import { css } from 'lit';
 
 export const NewsListStyle = css`
+
+  :host {
+    display: grid;
+    margin-bottom: 2em;
+    justify-items: center;
+  }
+
   .news-list {
     display: flex;
     justify-content: center;
@@ -22,6 +29,7 @@ export const NewsListStyle = css`
     bottom: 0.5rem;
     background-color: light-dark(var(--purple), var(--blue));
     color: var(--white);
+    width: 12em;
   }
 
 `;
