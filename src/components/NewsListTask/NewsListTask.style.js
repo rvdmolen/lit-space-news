@@ -1,6 +1,12 @@
 import { css } from 'lit';
 
 export const NewsListTaskStyle = css`
+  :host {
+    display: grid;
+    margin-bottom: 2em;
+    justify-items: center;
+  }
+
   .news-list {
     display: flex;
     justify-content: center;
