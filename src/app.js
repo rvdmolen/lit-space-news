@@ -17,10 +17,6 @@ export class LitSpaceNews extends LitElement {
         margin: 0 auto;
         text-align: center;
       }
-
-      loading-overlay {
-        display: none;
-      }
     `
   }
 
