@@ -6,9 +6,6 @@ import { Task } from '@lit/task';
 // Import Services
 import { ApiService } from '../../services/api-service.js';
 
-// Import Mixins
-import { LoadingMixin } from '../../mixins/loading/LoadingMixin.js';
-
 // Import styling
 import { NewsListTaskStyle } from './NewsListTask.style.js';
 
@@ -16,6 +13,7 @@ import { NewsListTaskStyle } from './NewsListTask.style.js';
 import '../NewsItem/NewsItem.js';
 import '../Overlay/LoadingOverlay.js';
 import '../Notification/Notification.js';
+import { LoadingMixin } from '../../mixins/loading/LoadingMixin.js';
 
 export class NewsListTask extends LoadingMixin(LitElement) {
 
@@ -27,13 +25,10 @@ export class NewsListTask extends LoadingMixin(LitElement) {
 
   #spaceNewsTask = new Task(this, {
     task: async ([searchString], {signal}) => {
-        this.__showLoading();
         const response = await fetch(ApiService.makeRequest(searchString), {signal});
-        // const response = await fetch(ApiService.makeRequest(searchString), {signal: AbortSignal.timeout(500)});
         if (!response.ok) {
             throw new Error('oeps');
         }
-        // signal.throwIfAborted();
         return response.json();
     },
   });
@@ -58,11 +53,11 @@ export class NewsListTask extends LoadingMixin(LitElement) {
   }
 
   __renderError() {
-    this.__hideLoading();
     return html`
       <lit-space-news-notification error>Oeps, something went wrong</lit-space-news-notification>
     `
   }
+
 
   __renderStartMessage() {
     return html`
@@ -75,7 +70,7 @@ export class NewsListTask extends LoadingMixin(LitElement) {
       <loading-overlay id="overlay-dialog"></loading-overlay>
       ${this.#spaceNewsTask.render({
         initial: () => this.__renderStartMessage(),
-        pending: () => html`<p>Running task...</p>`,
+        pending: () => this.__showLoading(),
         complete: (value) => this.__renderNewsList(value?.results),
         error: () => this.__renderError(),
       })}
