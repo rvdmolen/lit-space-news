@@ -79,10 +79,17 @@ export class NewsList extends LitElement {
         )}
       </ul>
 
-      ${when(this._next && !this._loading, () => html`<button class="btn" @click="${this.__loadMoreNewsItems}">More</button>`)}
-      ${when(!this._news && !this._loading, () => html`<lit-space-news-notification info>Ready for takeoff??? Start a search</lit-space-news-notification>`)}
-      ${when(this._news?.length === 0 && !this._loading && !this._error, () => html`<lit-space-news-notification warning>No space news is found!</lit-space-news-notification>`)}
-      ${when(this._error && !this._loading, () => html`<lit-space-news-notification error>Oeps, something went wrong</lit-space-news-notification>`)}
+      ${when(this._next && !this._loading,
+        () => html`<button class="btn" @click="${this.__loadMoreNewsItems}">More</button>`)}
+
+      ${when(!this._news && !this._loading,
+        () => html`<lit-space-news-notification info>Ready for takeoff??? Start a search</lit-space-news-notification>`)}
+
+      ${when(this._news?.length === 0 && !this._loading && !this._error,
+        () => html`<lit-space-news-notification warning>No space news is found!</lit-space-news-notification>`)}
+
+      ${when(this._error && !this._loading,
+        () => html`<lit-space-news-notification error>Oeps, something went wrong</lit-space-news-notification>`)}
     `
   }
 }
