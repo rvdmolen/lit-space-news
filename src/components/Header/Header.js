@@ -48,12 +48,12 @@ export class Header extends LitElement {
     return html`
       <header>
         <div class="title">
-          <img src="../../../assets/logo.png" aria-label="Flight space news logo" alt="Flight space news logo" />
+          <img src="/assets/logo.png" aria-label="Flight space news logo" alt="Flight space news logo" />
           <h2>Flight space news</h2>
         </div>
         <div class="buttons">
           <button @click="${this.__changeTheme}">
-            <img src="../../../assets/theme-switcher.svg" aria-label="Switch the theme" alt="Switch the theme" />
+            <img src="/assets/theme-switcher.svg" aria-label="Switch the theme" alt="Switch the theme" />
           </button>
         </div>
         <div>

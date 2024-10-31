@@ -33,7 +33,6 @@ export class LitSpaceNews extends LitElement {
 
   render() {
     return html`
-
       <lit-space-news-header @search-change="${this.__handleSearchChange}"></lit-space-news-header>
       <main>
         <lit-space-news-banner></lit-space-news-banner>
