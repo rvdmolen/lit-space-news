@@ -16,6 +16,6 @@
     "@lit/task": "^1.0.1"
   },
   "devDependencies": {
-    "vite": "^5.4.2"
+    "vite": "^5.4.5"
   }
 }

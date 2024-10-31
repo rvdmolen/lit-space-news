@@ -49,7 +49,7 @@ export const HeaderStyle = css`
     border-color: #E2E8F0;
     outline-color: var(--blue);
     padding: 9px 4px 9px 40px;
-    background: transparent url("/assets/search-white.svg") no-repeat 13px;
+    background: transparent url("/assets/search.svg") no-repeat 13px;
   }
 
   .buttons {
