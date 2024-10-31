@@ -79,8 +79,7 @@ export class NewsList extends LitElement {
         )}
       </ul>
 
-      ${when(this._next && !this._loading,
-        () => html`<button class="btn" @click="${this.__loadMoreNewsItems}">More</button>`)}
+
 
       ${when(!this._news && !this._loading,
         () => html`<lit-space-news-notification info>Ready for takeoff??? Start a search</lit-space-news-notification>`)}
@@ -90,6 +89,9 @@ export class NewsList extends LitElement {
 
       ${when(this._error && !this._loading,
         () => html`<lit-space-news-notification error>Oeps, something went wrong</lit-space-news-notification>`)}
+
+      ${when(this._next && !this._loading,
+        () => html`<button class="btn" @click="${this.__loadMoreNewsItems}">More</button>`)}
     `
   }
 }
