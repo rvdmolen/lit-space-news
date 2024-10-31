@@ -25,13 +25,13 @@ export class NewsListTask extends LoadingMixin(LitElement) {
     _news: {type: Array, state: true},
   }
 
-  _spaceNewsTask = new Task(this, {
+  #spaceNewsTask = new Task(this, {
     task: async ([searchString], {signal}) => {
         this.__showLoading();
-        const response = await fetch(ApiService.makeRequest(searchString), {signal});
-        // const response = await fetch(ApiService.makeRequest(searchString), {signal: AbortSignal.timeout(500)});
+        // const response = await fetch(ApiService.makeRequest(searchString), {signal});
+        const response = await fetch(ApiService.makeRequest(searchString), {signal: AbortSignal.timeout(500)});
         if (!response.ok) {
-            throw new Error(response.status);
+            throw new Error('oeps');
         }
         signal.throwIfAborted();
         return response.json();
@@ -39,7 +39,7 @@ export class NewsListTask extends LoadingMixin(LitElement) {
   });
 
   fetchSpaceNews(searchString) {
-    this._spaceNewsTask.run([searchString]);
+    this.#spaceNewsTask.run([searchString]);
   }
 
   __renderNewsList(news) {
@@ -73,7 +73,7 @@ export class NewsListTask extends LoadingMixin(LitElement) {
   render() {
     return html`
       <loading-overlay id="overlay-dialog"></loading-overlay>
-      ${this._spaceNewsTask.render({
+      ${this.#spaceNewsTask.render({
         initial: () => this.__renderStartMessage(),
         pending: () => html`<p>Running task...</p>`,
         complete: (value) => this.__renderNewsList(value?.results),

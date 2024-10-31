@@ -31,6 +31,7 @@ export const NewsItemStyle = css`
 
   .news-list__box > h3 {
     text-align: center;
+    padding-inline: 1rem;
   }
 
   .news-list__box > p {
