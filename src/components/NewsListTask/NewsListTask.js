@@ -28,12 +28,12 @@ export class NewsListTask extends LoadingMixin(LitElement) {
   #spaceNewsTask = new Task(this, {
     task: async ([searchString], {signal}) => {
         this.__showLoading();
-        // const response = await fetch(ApiService.makeRequest(searchString), {signal});
-        const response = await fetch(ApiService.makeRequest(searchString), {signal: AbortSignal.timeout(500)});
+        const response = await fetch(ApiService.makeRequest(searchString), {signal});
+        // const response = await fetch(ApiService.makeRequest(searchString), {signal: AbortSignal.timeout(500)});
         if (!response.ok) {
             throw new Error('oeps');
         }
-        signal.throwIfAborted();
+        // signal.throwIfAborted();
         return response.json();
     },
   });
