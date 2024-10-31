@@ -26,9 +26,7 @@ export class NewsListTask extends LoadingMixin(LitElement) {
   #spaceNewsTask = new Task(this, {
     task: async ([searchString], {signal}) => {
         const response = await fetch(ApiService.makeRequest(searchString), {signal});
-        if (!response.ok) {
-            throw new Error('oeps');
-        }
+        if (!response.ok) { throw new Error(response.status); }
         return response.json();
     },
   });
@@ -38,7 +36,6 @@ export class NewsListTask extends LoadingMixin(LitElement) {
   }
 
   __renderNewsList(news) {
-    this.__hideLoading();
     return html`
       <ul class="news-list">
         ${news?.map((newsItem) =>
@@ -71,8 +68,14 @@ export class NewsListTask extends LoadingMixin(LitElement) {
       ${this.#spaceNewsTask.render({
         initial: () => this.__renderStartMessage(),
         pending: () => this.__showLoading(),
-        complete: (value) => this.__renderNewsList(value?.results),
-        error: () => this.__renderError(),
+        complete: (value) => {
+          this.__hideLoading();
+          return this.__renderNewsList(value?.results)
+        },
+        error: (value) => {
+          this.__hideLoading();
+          return this.__renderError();
+        },
       })}
     `;
   }
