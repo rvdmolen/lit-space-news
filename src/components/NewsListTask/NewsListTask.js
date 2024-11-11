@@ -15,25 +15,38 @@ import '../Overlay/LoadingOverlay.js';
 import '../Notification/Notification.js';
 import { LoadingMixin } from '../../mixins/loading/LoadingMixin.js';
 
+// Store
+import { searchSpaceItemSignal, searchSpaceItemWatcher } from '../../services/state-service.js';
+
+
 export class NewsListTask extends LoadingMixin(LitElement) {
 
   static styles = [NewsListTaskStyle];
 
   static properties = {
     _news: {type: Array, state: true},
+    _myValue: {type: Number},
   }
 
   #spaceNewsTask = new Task(this, {
     task: async ([searchString], {signal}) => {
       this.__showLoading();
-      const response = await fetch(ApiService.makeRequest(searchString), {signal: AbortSignal.timeout( 500)});
+      // const response = await fetch(ApiService.makeRequest(searchString), {signal: AbortSignal.timeout( 500)});
+      const response = await fetch(ApiService.makeRequest(searchString));
       if (!response.ok) { throw new Error(response.status); }
       signal.throwIfAborted();
       return response.json();
     },
   });
 
-  fetchSpaceNews(searchString) {
+  connectedCallback() {
+    super.connectedCallback();
+    searchSpaceItemWatcher(searchSpaceItemSignal, () => {
+      this.__fetchSpaceNews(searchSpaceItemSignal.get());
+    })
+  }
+
+  __fetchSpaceNews(searchString) {
     this.#spaceNewsTask.run([searchString]);
   }
 
@@ -42,7 +55,7 @@ export class NewsListTask extends LoadingMixin(LitElement) {
       <ul class="news-list">
         ${news?.map((newsItem) =>
           html`
-            <lit-space-news-item .newsItem="${newsItem}"></lit-space-news-item>`
+            <lit-space-news-item data-seq=${newsItem.id} .newsItem="${newsItem}"></lit-space-news-item>`
         )}
       </ul>
       ${when(news?.length === 0,

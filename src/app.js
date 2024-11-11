@@ -7,6 +7,9 @@ import './components/Header/Header.js';
 import './components/NewsList/NewsList.js';
 import './components/NewsListTask/NewsListTask.js';
 
+// Store
+import { searchSpaceItemSignal } from './services/state-service.js';
+
 
 export class LitSpaceNews extends LitElement {
 
@@ -20,12 +23,8 @@ export class LitSpaceNews extends LitElement {
     `
   }
 
-  get spaceListNewsElement() {
-    return this.shadowRoot.getElementById('lit-space-news-list');
-  }
-
   async __handleSearchChange({detail}) {
-    await this.spaceListNewsElement.fetchSpaceNews(detail.value);
+    searchSpaceItemSignal.set(detail.value);
   }
 
   render() {
