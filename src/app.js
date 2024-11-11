@@ -5,6 +5,7 @@ import { LitElement, css, html } from 'lit';
 import './components/Banner/Banner.js';
 import './components/Header/Header.js';
 import './components/NewsList/NewsList.js';
+import './components/NewsListTask/NewsListTask.js';
 
 
 export class LitSpaceNews extends LitElement {
@@ -32,7 +33,7 @@ export class LitSpaceNews extends LitElement {
       <lit-space-news-header @search-change="${this.__handleSearchChange}"></lit-space-news-header>
       <main>
         <lit-space-news-banner></lit-space-news-banner>
-        <lit-space-news-list id="lit-space-news-list"></lit-space-news-list>
+        <lit-space-news-list-task id="lit-space-news-list"></lit-space-news-list-task>
       </main>
     `
   }
