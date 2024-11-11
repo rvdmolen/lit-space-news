@@ -66,4 +66,16 @@ export const NewsItemStyle = css`
     display: flex;
     justify-content: center;
   }
+
+  .news-list__box  {
+    opacity: 0;
+    animation: fade-in 2s linear forwards   ;
+    animation-timeline: view();
+    animation-range: entry;
+  }
+
+  @keyframes fade-in {
+      to {opacity: 1}
+  }
+
 `;
