@@ -67,9 +67,13 @@ export const HeaderStyle = css`
     }
   }
 
-  @media (prefers-color-scheme: light) {
+  .dark-mode input {
+    background: transparent url("/assets/search-white.svg") no-repeat 13px;
+  }
+
+  @media (prefers-color-scheme: dark) {
     input {
-      background: transparent url("/assets/search.svg") no-repeat 13px;
+      background: transparent url("/assets/search-white.svg") no-repeat 13px;
     }
   }
 `;
