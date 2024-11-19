@@ -1,6 +1,6 @@
 
-const makeRequest = (searchString) => {
-  return new Request(`https://api.spaceflightnewsapi.net/v4/articles/?limit=10&title_contains=${searchString}`, {
+const makeRequest = (searchString, offset) => {
+  return new Request(`https://api.spaceflightnewsapi.net/v4/articles/?limit=10&offset=${offset}&title_contains=${searchString}`, {
     method: "GET",
   });
 };

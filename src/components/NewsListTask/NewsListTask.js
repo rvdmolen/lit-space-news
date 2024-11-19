@@ -1,5 +1,5 @@
 // Import library dependencies
-import { LitElement, html } from 'lit'
+import { html, LitElement } from 'lit'
 import { when } from 'lit/directives/when.js';
 import { Task } from '@lit/task';
 
@@ -18,32 +18,67 @@ import { LoadingMixin } from '../../mixins/loading/LoadingMixin.js';
 // Store
 import { searchSpaceItemSignal, searchSpaceItemWatcher } from '../../services/state-service.js';
 
-
 export class NewsListTask extends LoadingMixin(LitElement) {
+
+  #intersectionObserver;
+  #news;
+  #next;
 
   static styles = [NewsListTaskStyle];
 
-  static properties = {
-    _news: {type: Array, state: true},
-    _myValue: {type: Number},
-  }
-
   #spaceNewsTask = new Task(this, {
-    task: async ([searchString], {signal}) => {
-      this.__showLoading();
+    task: async ([searchString, offset = 10], {signal}) => {
       // const response = await fetch(ApiService.makeRequest(searchString), {signal: AbortSignal.timeout( 500)});
-      const response = await fetch(ApiService.makeRequest(searchString));
+      const response = await fetch(ApiService.makeRequest(searchString, offset));
       if (!response.ok) { throw new Error(response.status); }
       signal.throwIfAborted();
-      return response.json();
+
+      const apiResult = await response.json();
+      const {results, next} = apiResult;
+
+      const mergedNews = [...this.#news, ...results];
+      this.#next = next;
+      this.#news = mergedNews;
+
+      return {
+        results: mergedNews,
+      };
     },
   });
+
+  get dom() {
+    return {
+      footer: () => this.shadowRoot.querySelector('.footer'),
+    };
+  }
+
+  constructor() {
+    super();
+    this.#news = [];
+    this.#intersectionObserver = new IntersectionObserver(
+      this.handleIntersectionQuotaCard.bind(this),
+      { threshold: 0.75 },
+    );
+  }
+
+  firstUpdated() {
+    this.#intersectionObserver.observe(this.dom.footer());
+  }
+
+  handleIntersectionQuotaCard([footer]) {
+    if ((footer.isIntersecting) && (this.#next)) {
+      const params = new URLSearchParams(this.#next.split('?')[1]);
+      const nextOffset = params.get('offset');
+      const searchString = params.get('title_contains');
+      this.#spaceNewsTask.run([searchString, nextOffset]);
+    }
+  }
 
   connectedCallback() {
     super.connectedCallback();
     searchSpaceItemWatcher(searchSpaceItemSignal, () => {
       this.__fetchSpaceNews(searchSpaceItemSignal.get());
-    })
+    });
   }
 
   __fetchSpaceNews(searchString) {
@@ -52,12 +87,7 @@ export class NewsListTask extends LoadingMixin(LitElement) {
 
   __renderNewsList(news) {
     return html`
-      <ul class="news-list">
-        ${news?.map((newsItem) =>
-          html`
-            <lit-space-news-item data-seq=${newsItem.id} .newsItem="${newsItem}"></lit-space-news-item>`
-        )}
-      </ul>
+
       ${when(news?.length === 0,
               () => html`<lit-space-news-notification warning>No space news is found!</lit-space-news-notification>`
       )}
@@ -70,28 +100,40 @@ export class NewsListTask extends LoadingMixin(LitElement) {
     `
   }
 
-
   __renderStartMessage() {
     return html`
       <lit-space-news-notification info>Ready for takeoff??? Start a search</lit-space-news-notification>
     `
   }
 
+  get news() {
+    const { results } = this.#spaceNewsTask?.value || false;
+    return results || [];
+  }
+
   render() {
     return html`
       <loading-overlay id="overlay-dialog"></loading-overlay>
+      <ul class="news-list">
+        ${this.news.map((newsItem) =>
+          html`
+            <lit-space-news-item data-seq=${newsItem.id} .newsItem="${newsItem}"></lit-space-news-item>`
+        )}
+      </ul>
       ${this.#spaceNewsTask.render({
         initial: () => this.__renderStartMessage(),
         pending: () => this.__showLoading(),
-        complete: (value) => {
+        complete: ({results}) => {
           this.__hideLoading();
-          return this.__renderNewsList(value?.results)
+          return this.__renderNewsList(results);
         },
         error: (value) => {
+          console.log(value);
           this.__hideLoading();
           return this.__renderError();
         },
       })}
+      <div class="footer"></div>
     `;
   }
 }

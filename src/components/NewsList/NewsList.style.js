@@ -32,4 +32,9 @@ export const NewsListStyle = css`
     width: 12em;
   }
 
+  .footer {
+    height: 10em;
+    background-color: var(--purple);
+  }
+
 `;

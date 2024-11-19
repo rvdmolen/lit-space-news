@@ -30,4 +30,9 @@ export const NewsListTaskStyle = css`
     color: var(--white);
   }
 
+  .footer {
+    height: 10em;
+    background-color: var(--purple);
+  }
+
 `;
