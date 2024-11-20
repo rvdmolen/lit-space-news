@@ -11,40 +11,21 @@ import { NewsListTaskStyle } from './NewsListTask.style.js';
 
 // Import custom components
 import '../NewsItem/NewsItem.js';
-import '../Overlay/LoadingOverlay.js';
+import '../LoadingOverlay/LoadingOverlay.js';
 import '../Notification/Notification.js';
 import { LoadingMixin } from '../../mixins/loading/LoadingMixin.js';
 
 // Store
-import { searchSpaceItemSignal, searchSpaceItemWatcher } from '../../services/state-service.js';
+import { SignalService } from '../../services/state-service.js';
 
 export class NewsListTask extends LoadingMixin(LitElement) {
 
   #intersectionObserver;
   #news;
   #next;
+  #spaceNewsTask;
 
   static styles = [NewsListTaskStyle];
-
-  #spaceNewsTask = new Task(this, {
-    task: async ([searchString, offset = 10], {signal}) => {
-      // const response = await fetch(ApiService.makeRequest(searchString), {signal: AbortSignal.timeout( 500)});
-      const response = await fetch(ApiService.makeRequest(searchString, offset));
-      if (!response.ok) { throw new Error(response.status); }
-      signal.throwIfAborted();
-
-      const apiResult = await response.json();
-      const {results, next} = apiResult;
-
-      const mergedNews = [...this.#news, ...results];
-      this.#next = next;
-      this.#news = mergedNews;
-
-      return {
-        results: mergedNews,
-      };
-    },
-  });
 
   get dom() {
     return {
@@ -57,8 +38,27 @@ export class NewsListTask extends LoadingMixin(LitElement) {
     this.#news = [];
     this.#intersectionObserver = new IntersectionObserver(
       this.handleIntersectionQuotaCard.bind(this),
-      { threshold: 0.75 },
+      { threshold: 0.5 },
     );
+    this.#spaceNewsTask = new Task(this, {
+      task: async ([searchString, offset = 10], {signal}) => {
+        // const response = await fetch(ApiService.makeRequest(searchString), {signal: AbortSignal.timeout( 500)});
+        const response = await fetch(ApiService.makeRequest(searchString, offset));
+        if (!response.ok) { throw new Error(response.status); }
+        signal.throwIfAborted();
+
+        const apiResult = await response.json();
+        const {results, next} = apiResult;
+
+        const mergedNews = [...this.#news, ...results];
+        this.#next = next;
+        this.#news = mergedNews;
+
+        return {
+          results: mergedNews,
+        };
+      },
+    });
   }
 
   firstUpdated() {
@@ -76,8 +76,8 @@ export class NewsListTask extends LoadingMixin(LitElement) {
 
   connectedCallback() {
     super.connectedCallback();
-    searchSpaceItemWatcher(searchSpaceItemSignal, () => {
-      this.__fetchSpaceNews(searchSpaceItemSignal.get());
+    SignalService.createSignalWatcher(SignalService.searchSpaceItemSignal, () => {
+      this.__fetchSpaceNews(SignalService.searchSpaceItemSignal.get());
     });
   }
 

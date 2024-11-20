@@ -10,7 +10,7 @@ import { NewsListStyle } from './NewsList.style.js';
 
 // Import custom components
 import '../NewsItem/NewsItem.js';
-import '../Overlay/LoadingOverlay.js';
+import '../LoadingOverlay/LoadingOverlay.js';
 import '../Notification/Notification.js';
 
 export class NewsList extends LitElement {

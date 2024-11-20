@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit'
 import { NewsItemStyle } from './NewsItem.style.js';
+import { Events } from '../../events/events.js';
 
 export class NewsItem extends LitElement {
 
@@ -7,6 +8,16 @@ export class NewsItem extends LitElement {
 
   static properties = {
     newsItem: {type: Object},
+  }
+
+  #openSideBar() {
+    this.dispatchEvent(
+      new CustomEvent(Events.OPEN_SIDEBAR, {
+        bubbles: true,
+        composed: true,
+        detail: {}
+      })
+    );
   }
 
   render() {
@@ -18,7 +29,8 @@ export class NewsItem extends LitElement {
         <h3>${this.newsItem.title}</h3>
         <p>${this.newsItem.summary}</p>
         <div class="button-container">
-          <a href="#" class="link_button">read more</a>
+          <a href="#" class="link_button" @click="${this.#openSideBar}">read more</a>
+          <button @click="${this.#openSideBar}">Mpre</button>
         </div>
       </li>
     `

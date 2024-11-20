@@ -27,8 +27,10 @@ export class LoadingOverlay extends LitElement {
     }
   }
 
-  get overlayDialog() {
-    return this.shadowRoot.querySelector('dialog');
+  get dom() {
+    return {
+      dialog: this.shadowRoot.querySelector('dialog')
+    };
   }
 
   setOptions(options) {
@@ -43,11 +45,11 @@ export class LoadingOverlay extends LitElement {
     this.setOptions(options);
     this.update();
     await this.updateComplete;
-    this.overlayDialog.showModal();
+    this.dom.dialog.showModal();
   }
 
   hide() {
-    this.overlayDialog.close();
+    this.dom.dialog.close();
   }
 
   render() {

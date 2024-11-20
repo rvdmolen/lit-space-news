@@ -6,10 +6,10 @@ import './components/Banner/Banner.js';
 import './components/Header/Header.js';
 import './components/NewsList/NewsList.js';
 import './components/NewsListTask/NewsListTask.js';
+import './components/SideBar/SideBar.js';
 
 // Store
-import { searchSpaceItemSignal } from './services/state-service.js';
-
+import { SignalService } from './services/state-service.js';
 
 export class LitSpaceNews extends LitElement {
 
@@ -23,16 +23,22 @@ export class LitSpaceNews extends LitElement {
     `
   }
 
-  async __handleSearchChange({detail}) {
-    searchSpaceItemSignal.set(detail.value);
+  async #handleSearchChange({detail}) {
+    SignalService.searchSpaceItemSignal.set(detail.value);
+  }
+
+  async #openSidebar() {
+    const current = SignalService.openSideBarSignal.get();
+    SignalService.openSideBarSignal.set(!current);
   }
 
   render() {
     return html`
-      <lit-space-news-header @search-change="${this.__handleSearchChange}"></lit-space-news-header>
+      <lit-space-news-header @search-change="${this.#handleSearchChange}"></lit-space-news-header>
+      <lit-space-news-sidebar></lit-space-news-sidebar>
       <main>
         <lit-space-news-banner></lit-space-news-banner>
-        <lit-space-news-list-task id="lit-space-news-list"></lit-space-news-list-task>
+        <lit-space-news-list-task @open-side-bar="${this.#openSidebar}" id="lit-space-news-list"></lit-space-news-list-task>
       </main>
     `
   }
