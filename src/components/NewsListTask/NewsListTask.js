@@ -33,22 +33,21 @@ export class NewsListTask extends LoadingMixin(LitElement) {
   }
 
   get news() {
-    const { results } = this.#spaceNewsTask?.value || false;
+    const {results} = this.#spaceNewsTask?.value || false;
     return results || [];
   }
 
   constructor() {
     super();
     this.#news = [];
-    this.#intersectionObserver = new IntersectionObserver(
-      this.handleIntersectionQuotaCard.bind(this),
-      { threshold: 0.5 },
-    );
+    this.#intersectionObserver = new IntersectionObserver(this.handleIntersectionQuotaCard.bind(this), { threshold: 0.5 });
     this.#spaceNewsTask = new Task(this, {
       task: async ([searchString, offset = 10], {signal}) => {
         // const response = await fetch(ApiService.makeRequest(searchString), {signal: AbortSignal.timeout( 500)});
         const response = await fetch(ApiService.makeRequest(searchString, offset));
-        if (!response.ok) { throw new Error(response.status); }
+        if (!response.ok) {
+          throw new Error(response.status);
+        }
         signal.throwIfAborted();
 
         const apiResult = await response.json();
@@ -81,18 +80,15 @@ export class NewsListTask extends LoadingMixin(LitElement) {
   connectedCallback() {
     super.connectedCallback();
     SignalService.createSignalWatcher(SignalService.searchSpaceItemSignal, (newValue) => {
-      this.#fetchSpaceNews(newValue);
+      this.#spaceNewsTask.run([newValue]);
     });
-  }
-
-  #fetchSpaceNews(searchString) {
-    this.#spaceNewsTask.run([searchString]);
   }
 
   #renderNewsList(news) {
     return html`
       ${when(news?.length === 0,
-              () => html`<lit-space-news-notification warning>No space news is found!</lit-space-news-notification>`
+        () => html`
+          <lit-space-news-notification warning>No space news is found!</lit-space-news-notification>`
       )}
     `
   }
