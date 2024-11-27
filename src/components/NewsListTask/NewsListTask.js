@@ -19,7 +19,6 @@ import { LoadingMixin } from '../../mixins/loading/LoadingMixin.js';
 import { SignalService } from '../../services/state-service.js';
 
 export class NewsListTask extends LoadingMixin(LitElement) {
-
   #intersectionObserver;
   #news;
   #next;
@@ -31,6 +30,11 @@ export class NewsListTask extends LoadingMixin(LitElement) {
     return {
       footer: () => this.shadowRoot.querySelector('.footer'),
     };
+  }
+
+  get news() {
+    const { results } = this.#spaceNewsTask?.value || false;
+    return results || [];
   }
 
   constructor() {
@@ -76,39 +80,33 @@ export class NewsListTask extends LoadingMixin(LitElement) {
 
   connectedCallback() {
     super.connectedCallback();
-    SignalService.createSignalWatcher(SignalService.searchSpaceItemSignal, () => {
-      this.__fetchSpaceNews(SignalService.searchSpaceItemSignal.get());
+    SignalService.createSignalWatcher(SignalService.searchSpaceItemSignal, (newValue) => {
+      this.#fetchSpaceNews(newValue);
     });
   }
 
-  __fetchSpaceNews(searchString) {
+  #fetchSpaceNews(searchString) {
     this.#spaceNewsTask.run([searchString]);
   }
 
-  __renderNewsList(news) {
+  #renderNewsList(news) {
     return html`
-
       ${when(news?.length === 0,
               () => html`<lit-space-news-notification warning>No space news is found!</lit-space-news-notification>`
       )}
     `
   }
 
-  __renderError() {
+  #renderError() {
     return html`
       <lit-space-news-notification error>Oeps, something went wrong</lit-space-news-notification>
     `
   }
 
-  __renderStartMessage() {
+  #renderStartMessage() {
     return html`
       <lit-space-news-notification info>Ready for takeoff??? Start a search</lit-space-news-notification>
     `
-  }
-
-  get news() {
-    const { results } = this.#spaceNewsTask?.value || false;
-    return results || [];
   }
 
   render() {
@@ -121,16 +119,15 @@ export class NewsListTask extends LoadingMixin(LitElement) {
         )}
       </ul>
       ${this.#spaceNewsTask.render({
-        initial: () => this.__renderStartMessage(),
-        pending: () => this.__showLoading(),
+        initial: () => this.#renderStartMessage(),
+        pending: () => this.showLoading(),
         complete: ({results}) => {
-          this.__hideLoading();
-          return this.__renderNewsList(results);
+          this.hideLoading();
+          return this.#renderNewsList(results);
         },
         error: (value) => {
-          console.log(value);
-          this.__hideLoading();
-          return this.__renderError();
+          this.hideLoading();
+          return this.#renderError();
         },
       })}
       <div class="footer"></div>

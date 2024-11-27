@@ -4,13 +4,13 @@ export const LoadingMixin = (superClass) => class extends superClass {
     return this.shadowRoot.getElementById('overlay-dialog');
   }
 
-  __showLoading() {
+  showLoading() {
     this._loadingElement.show({
       'spinnerColor': '#6120d0',
     });
   }
 
-  __hideLoading() {
+  hideLoading() {
     this._loadingElement.hide();
   }
 };

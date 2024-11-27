@@ -19,12 +19,12 @@ export class Header extends LitElement {
     document.querySelector('html').style['color-scheme'] = theme;
   }
 
-  __searchChange(event) {
+  #searchChange(event) {
     const searchValue = event?.target.value;
-    this.__sendSearchChangeEvent(searchValue);
+    this.#sendSearchChangeEvent(searchValue);
   }
 
-  __sendSearchChangeEvent(value) {
+  #sendSearchChangeEvent(value) {
     this.dispatchEvent(
       new CustomEvent(Events.SEARCH_CHANGE, {
         bubbles: true,
@@ -36,7 +36,7 @@ export class Header extends LitElement {
     );
   }
 
-  __changeTheme() {
+  #changeTheme() {
     if (!this.currentTheme || this.currentTheme === THEMES.LIGHT) {
       this.currentTheme = THEMES.DARK;
     } else {
@@ -52,12 +52,12 @@ export class Header extends LitElement {
           <h2>Flight space news</h2>
         </div>
         <div class="buttons">
-          <button @click="${this.__changeTheme}">
+          <button @click="${this.#changeTheme}">
             <img src="/assets/theme-switcher.svg" aria-label="Switch the theme" alt="Switch the theme" />
           </button>
         </div>
         <div>
-          <input @change="${this.__searchChange}" type="search" placeholder="Search" />
+          <input @change="${this.#searchChange}" type="search" placeholder="Search" />
         </div>
       </header>
     `

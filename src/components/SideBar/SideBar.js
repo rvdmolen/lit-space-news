@@ -29,21 +29,16 @@ export class SideBar extends LitElement {
     this.dom.dialog.showModal();
   }
 
-  #hide() {
-    this.dom.dialog.close();
-  }
 
   render() {
     return html`
-      <p>Hello</p>
-      <button @click="${this.#openSideBar}">Show</button>
       <dialog>
-        <form>
+        <form method="dialog">
           <header>
             <h2>Dialog header</h2>
-            <button class="cancel-btn" @click="${this.#hide}">X</button>
+            <button class="cancel-btn">X</button>
           </header>
-          <button @click="${this.#hide}">Close</button>
+          <button>Close</button>
         </form>
       </dialog>
     `

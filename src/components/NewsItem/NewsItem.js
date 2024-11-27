@@ -30,7 +30,6 @@ export class NewsItem extends LitElement {
         <p>${this.newsItem.summary}</p>
         <div class="button-container">
           <a href="#" class="link_button" @click="${this.#openSideBar}">read more</a>
-          <button @click="${this.#openSideBar}">Mpre</button>
         </div>
       </li>
     `
