@@ -24,7 +24,7 @@ export const NewsItemStyle = css`
   }
 
   .news-list__box:hover {
-    width: 24.5em;
+    //width: 24.5em;
     background-color: light-dark(var(--grey-light-accent) ,var(--grey-dark-accent));
   }
 
@@ -49,6 +49,7 @@ export const NewsItemStyle = css`
   }
 
   .link_button {
+    text-align: center;
     text-decoration: none;
     letter-spacing: .025em;
     text-transform: uppercase;

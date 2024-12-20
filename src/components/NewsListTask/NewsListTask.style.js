@@ -5,6 +5,9 @@ export const NewsListTaskStyle = css`
     display: grid;
     margin-bottom: 2em;
     justify-items: center;
+    height: 100%;
+
+
   }
 
   .news-list {

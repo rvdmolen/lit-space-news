@@ -17,6 +17,15 @@ export class Header extends LitElement {
 
   set currentTheme(theme) {
     document.querySelector('html').style['color-scheme'] = theme;
+    this.dispatchEvent(
+      new CustomEvent(Events.THEME_CHANGE, {
+        bubbles: true,
+        composed: true,
+        detail: {
+          theme
+        },
+      })
+    );
   }
 
   #searchChange(event) {

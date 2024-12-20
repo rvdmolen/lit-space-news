@@ -25,8 +25,11 @@ export class SideBar extends LitElement {
   }
 
   #openSideBar() {
-    console.log('open side bar');
     this.dom.dialog.showModal();
+  }
+
+  #closeSideBar() {
+    this.dom.dialog.close();
   }
 
 
@@ -36,9 +39,13 @@ export class SideBar extends LitElement {
         <form method="dialog">
           <header>
             <h2>Dialog header</h2>
-            <button class="cancel-btn">X</button>
           </header>
-          <button>Close</button>
+          <content>
+            <p>Content goes here</p>
+          </content>
+          <footer>
+            <button>Close</button>
+          </footer>
         </form>
       </dialog>
     `
