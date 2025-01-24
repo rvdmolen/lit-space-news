@@ -8,18 +8,28 @@ export const SideBarStyle = css`
   }
 
   dialog {
-    width: clamp(var(--minimum-size), 60%, 1600px);
-    height: 95vh;
-    position: absolute;
-    border-radius: 20px;
-    margin-right: 10px;
     outline: none;
-    border: 0;
-    box-shadow: 3px 2px 4px 2px rgb(0 0 0 / 30%);
-    transform-origin: right;
-    animation: slide-in 0.3s ease forwards;
-    padding: 0;
+    width: 100%;
+    height: 100vh;
+    border-color: var(--grey-border);
   }
+
+  @media (min-width: 35em) {
+    dialog {
+      width: clamp(var(--minimum-size), 60%, 1600px);
+      height: 95vh;
+      position: absolute;
+      border-radius: 20px;
+      margin-right: 10px;
+      border: 0;
+      box-shadow: 3px 2px 4px 2px rgb(0 0 0 / 30%);
+      transform-origin: right;
+      animation: slide-in 0.3s ease forwards;
+      padding: 0;
+    }
+  }
+
+
 
   form > content {
     padding: 1.0em;

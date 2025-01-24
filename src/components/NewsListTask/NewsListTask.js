@@ -101,7 +101,7 @@ export class NewsListTask extends LoadingMixin(LitElement) {
 
   #renderStartMessage() {
     return html`
-<!--      <lit-space-news-notification info>Ready for takeoff??? Start a search</lit-space-news-notification>-->
+
     `
   }
 

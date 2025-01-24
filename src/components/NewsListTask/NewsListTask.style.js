@@ -2,12 +2,10 @@ import { css } from 'lit';
 
 export const NewsListTaskStyle = css`
   :host {
-    display: grid;
+
     margin-bottom: 2em;
     justify-items: center;
     height: 100%;
-
-
   }
 
   .news-list {

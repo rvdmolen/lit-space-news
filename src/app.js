@@ -40,19 +40,46 @@ export class LitSpaceNews extends LitElement {
         grid-template-rows: min-content 1fr;
       }
 
-      .astronaut-background {
-        background-repeat: no-repeat;
-        background-position: bottom right;
-        background-attachment: fixed;
+
+
+
+      .picture-container {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        opacity:0.2;
+        z-index: -1;
+        display: flex;
+        justify-content: center;
       }
 
-      .astronaut-background-light {
-         background-image: radial-gradient(at top, rgba(240, 240, 240, 0.5) 40%, rgba(240, 240, 240, 1) 90%, rgba(240, 240, 240, 1) 100%), url('/assets/as2.webp');
+      .picture-container > img {
+        display: table;
+        position: relative;
+        height: 20rem;
       }
 
-      .astronaut-background-dark {
-        background-image: url('/assets/as2.webp');
+      @media (min-width: 35em) {
+        .picture-container > img {
+          height: 30rem;
+        }
+
+        .picture-container {
+          justify-content: right;
+        }
       }
+
+
+      @media (min-width: 45em) {
+        .picture-container > img {
+          height: 40rem;
+        }
+
+        .picture-container {
+          justify-content: right;
+        }
+      }
+
     `
   }
 
@@ -83,11 +110,14 @@ export class LitSpaceNews extends LitElement {
     return html`
       <div>
         <lit-space-news-header @search-change="${this.#handleSearchChange}" @theme-change="${this.#handleThemeChange}" ></lit-space-news-header>
-        <lit-space-news-sidebar></lit-space-news-sidebar>
+        <lit-space-news-sidebar open></lit-space-news-sidebar>
         <main>
           <lit-space-news-banner></lit-space-news-banner>
           <lit-space-news-list-task class="astronaut-background ${classMap(classes)}" @open-side-bar="${this.#openSidebar}" id="lit-space-news-list"></lit-space-news-list-task>
         </main>
+      </div>
+      <div class="picture-container">
+        <img src="/assets/as2.webp" aria-label="Image" alt="Image" />
       </div>
     `
   }

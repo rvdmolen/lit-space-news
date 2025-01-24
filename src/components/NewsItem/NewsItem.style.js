@@ -68,7 +68,7 @@ export const NewsItemStyle = css`
     justify-content: center;
   }
 
-  .news-list__box  {
+  .news-list__box__old  {
     opacity: 0;
     animation: fade-in 2s linear forwards   ;
     animation-timeline: view();

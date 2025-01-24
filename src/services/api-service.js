@@ -8,7 +8,7 @@ const makeRequest = (searchString, offset) => {
 
 const fetchNews = async (searchString) => {
   try {
-    const response =  await fetch(makeRequest(searchString));
+    const response =  await fetch(makeRequest(searchString), {mode: 'no-cors'});
     return response.json();
   } catch (err) {
     throw err;

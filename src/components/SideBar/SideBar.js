@@ -7,7 +7,13 @@ import { SignalService } from '../../services/state-service.js';
 
 export class SideBar extends LitElement {
 
-  static properties = {}
+  static properties = {
+    propOn: {
+       attribute: "prop-one",
+        type: String
+    }
+  }
+
 
   static styles = [SideBarStyle];
 
@@ -25,10 +31,13 @@ export class SideBar extends LitElement {
   }
 
   #openSideBar() {
+    document.body.style.overflow = "hidden";
     this.dom.dialog.showModal();
+
   }
 
   #closeSideBar() {
+    document.body.style.overflow = "scroll";
     this.dom.dialog.close();
   }
 
@@ -36,7 +45,7 @@ export class SideBar extends LitElement {
   render() {
     return html`
       <dialog>
-        <form method="dialog">
+        <form >
           <header>
             <h2>Dialog header</h2>
           </header>
@@ -44,7 +53,7 @@ export class SideBar extends LitElement {
             <p>Content goes here</p>
           </content>
           <footer>
-            <button>Close</button>
+            <button @click="${this.#closeSideBar}">Close</button>
           </footer>
         </form>
       </dialog>
