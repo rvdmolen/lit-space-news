@@ -36,4 +36,8 @@ export const NewsListTaskStyle = css`
     background-color: var(--purple);
   }
 
+  .wrapper {
+    width: 25em;
+  }
+
 `;

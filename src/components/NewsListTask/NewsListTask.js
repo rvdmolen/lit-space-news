@@ -107,6 +107,15 @@ export class NewsListTask extends LoadingMixin(LitElement) {
     `
   }
 
+  #renderHiddenCards() {
+    return html`
+      <li class="wrapper" aria-hidden="true"></li>
+      <li class="wrapper" aria-hidden="true"></li>
+      <li class="wrapper" aria-hidden="true"></li>
+      <li class="wrapper" aria-hidden="true"></li>
+    `
+  }
+
   render() {
     return html`
       <loading-overlay id="overlay-dialog"></loading-overlay>
@@ -115,6 +124,7 @@ export class NewsListTask extends LoadingMixin(LitElement) {
           html`
             <lit-space-news-item data-seq=${newsItem.id} .newsItem="${newsItem}"></lit-space-news-item>`
         )}
+        ${this.#renderHiddenCards()}
       </ul>
       ${this.#spaceNewsTask.render({
         initial: () => this.#renderStartMessage(),

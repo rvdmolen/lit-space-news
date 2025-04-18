@@ -16,7 +16,7 @@ export const SideBarStyle = css`
 
 
   .hidden {
-    animation: slide-out 0.3s ease forwards !important;
+    animation: slide-out 0.5s ease forwards !important;
   }
 
   @media (min-width: 45em) {
@@ -96,11 +96,7 @@ export const SideBarStyle = css`
     0% {
       transform: scaleX(1);
     }
-    35% {
-      opacity: 0.5;
-    }
     100% {
-      opacity: 0;
       transform: scaleX(0);
     }
   }

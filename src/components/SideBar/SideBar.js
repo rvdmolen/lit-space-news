@@ -7,15 +7,13 @@ import '../Spinner/Spinner.js';
 // Import styling
 import { SideBarStyle } from './SideBar.style.js';
 import { SignalService } from '../../services/state-service.js';
+import { when } from 'lit/directives/when.js';
 
 export class SideBar extends LitElement {
 
   static properties = {
-    propOn: {
-       attribute: "prop-one",
-        type: String
-    },
-    _newsItemId: {type: String},
+    _newsItemId: {type: String, state: true},
+    _loading: {type: Boolean, state: true},
   }
 
   static styles = [SideBarStyle];
@@ -23,8 +21,10 @@ export class SideBar extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     SignalService.createSignalWatcher(SignalService.openSideBarSignal, (data) => {
+      this._loading = true;
       this.#processData(data);
       this.#openSideBar(data);
+      // this._loading = false;
     });
   }
 
@@ -44,16 +44,16 @@ export class SideBar extends LitElement {
     dialog.classList.remove('hidden');
     dialog.showModal();
     this.dom.dialog.showModal();
-
   }
 
-  #closeSideBar() {
+  #closeSideBar(e) {
+    if (e) {e.preventDefault();}
     const dialog = this.dom.dialog;
     dialog.showModal();
     dialog.classList.add('hidden');
     setTimeout(() => {
       this.dom.dialog.close();
-    }, 300)
+    }, 500)
 
   }
 
@@ -72,9 +72,17 @@ export class SideBar extends LitElement {
             <h2>Dialog header</h2>
           </header>
           <content>
-            <p>Content goes here</p>
-            <lit-space-news-spinner></lit-space-news-spinner>
-            <p>${this._newsItemId}</p>
+            ${when(this._loading,() =>
+                html`
+                  <p></p>
+                  <lit-space-news-spinner></lit-space-news-spinner>
+                `,
+              () =>
+                html`
+                  <p>Content goes here</p>
+                  <p>${this._newsItemId}</p>
+                `
+              )}
           </content>
           <footer>
             <button @click="${this.#closeSideBar}">Close</button>
