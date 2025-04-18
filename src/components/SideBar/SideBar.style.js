@@ -4,7 +4,7 @@ import { css } from 'lit';
 
 export const SideBarStyle = css`
   :host {
-    --minimum-size: 25vw;
+    --minimum-size: 45vw;
   }
 
   dialog {
@@ -14,11 +14,15 @@ export const SideBarStyle = css`
     border-color: var(--grey-border);
   }
 
-  @media (min-width: 35em) {
+
+  .hidden {
+    animation: slide-out 0.3s ease forwards !important;
+  }
+
+  @media (min-width: 45em) {
     dialog {
       width: clamp(var(--minimum-size), 60%, 1600px);
       height: 95vh;
-      position: absolute;
       border-radius: 20px;
       margin-right: 10px;
       border: 0;
@@ -26,13 +30,14 @@ export const SideBarStyle = css`
       transform-origin: right;
       animation: slide-in 0.3s ease forwards;
       padding: 0;
+      opacity: 1;
     }
   }
 
-
-
   form > content {
     padding: 1.0em;
+    display: grid;
+    grid-template-rows: 30% 70%;
   }
 
   form > header {
@@ -89,15 +94,14 @@ export const SideBarStyle = css`
 
   @keyframes slide-out {
     0% {
-      opacity: 1;
-      transform: scaleX(0.00001);
+      transform: scaleX(1);
     }
     35% {
       opacity: 0.5;
     }
     100% {
       opacity: 0;
-      transform: scaleX(1);
+      transform: scaleX(0);
     }
   }
 

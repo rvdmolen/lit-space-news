@@ -13,6 +13,7 @@ export const HeaderStyle = css`
     align-items: center;
     padding: 1rem;
     gap: 1rem;
+    height: 3rem;
   }
 
   header > div:last-of-type {

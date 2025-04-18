@@ -15,7 +15,9 @@ export class NewsItem extends LitElement {
       new CustomEvent(Events.OPEN_SIDEBAR, {
         bubbles: true,
         composed: true,
-        detail: {}
+        detail: {
+          newsItemId: this.newsItem.id,
+        }
       })
     );
   }
@@ -43,7 +45,7 @@ export class NewsItem extends LitElement {
         <h3>${this.#mapTitle(this.newsItem.title)}</h3>
         <p>${this.#mapSummaryText(this.newsItem.summary)}</p>
         <div class="button-container">
-          <a href="#" class="link_button" @click="${this.#openSideBar}">read more</a>
+          <button class="btn-transparant" @click="${this.#openSideBar}">read more</button>
         </div>
       </li>
     `

@@ -37,6 +37,7 @@ export class NewsListTask extends LoadingMixin(LitElement) {
     return results || [];
   }
 
+
   constructor() {
     super();
     this.#news = [];
@@ -66,6 +67,7 @@ export class NewsListTask extends LoadingMixin(LitElement) {
 
   firstUpdated() {
     this.#intersectionObserver.observe(this.dom.footer());
+    this.#spaceNewsTask.run('test');
   }
 
   handleIntersectionQuotaCard([footer]) {

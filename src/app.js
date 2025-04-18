@@ -11,6 +11,7 @@ import './components/SideBar/SideBar.js';
 
 // Store
 import { SignalService } from './services/state-service.js';
+import { themeManager } from './services/theme-manager.js';
 
 const COLOR_THEME =  Object.freeze({
   DARK: 'dark',
@@ -40,9 +41,6 @@ export class LitSpaceNews extends LitElement {
         grid-template-rows: min-content 1fr;
       }
 
-
-
-
       .picture-container {
         position: fixed;
         bottom: 0;
@@ -69,7 +67,6 @@ export class LitSpaceNews extends LitElement {
         }
       }
 
-
       @media (min-width: 45em) {
         .picture-container > img {
           height: 40rem;
@@ -85,7 +82,7 @@ export class LitSpaceNews extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.colorMode = COLOR_THEME.LIGHT;
+    this.colorMode = themeManager.setInitialTheme();
   }
 
   async #handleSearchChange({detail}) {
@@ -93,13 +90,12 @@ export class LitSpaceNews extends LitElement {
   }
 
   #handleThemeChange({detail}) {
-    this.colorMode = detail.theme;
-    console.log(this.colorMode);
+    this.colorMode = themeManager.handleThemeChange(detail.theme);
   }
 
-  async #openSidebar() {
+  async #openSidebar({detail}) {
     const current = SignalService.openSideBarSignal.get();
-    SignalService.openSideBarSignal.set(!current);
+    SignalService.openSideBarSignal.set({current: !current, detail});
   }
 
   render() {

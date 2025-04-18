@@ -1,11 +1,9 @@
 import { LitElement, css, html } from 'lit'
 import { HeaderStyle } from './Header.style.js';
 import { Events } from '../../events/events.js';
+import { THEMES } from '../../model/constants.js';
 
-const THEMES = Object.freeze({
-  DARK: 'dark',
-  LIGHT: 'light'
-})
+
 
 export class Header extends LitElement {
 
@@ -66,7 +64,7 @@ export class Header extends LitElement {
           </button>
         </div>
         <div>
-          <input @change="${this.#searchChange}" type="search" placeholder="Search" />
+          <input @change="${this.#searchChange}" type="search" placeholder="Search" value="test"/>
         </div>
       </header>
     `

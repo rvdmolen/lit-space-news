@@ -1,6 +1,8 @@
 
+const BASE_URL = 'https://api.spaceflightnewsapi.net/v4';
+
 const makeRequest = (searchString, offset) => {
-  return new Request(`https://api.spaceflightnewsapi.net/v4/articles/?limit=10&offset=${offset}&title_contains=${searchString}`, {
+  return new Request(`${BASE_URL}/articles/?limit=10&offset=${offset}&title_contains=${searchString}`, {
     method: "GET",
   });
 };
