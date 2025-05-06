@@ -22,7 +22,6 @@ export const SideBarStyle = css`
   @media (min-width: 45em) {
     dialog {
       width: clamp(var(--minimum-size), 60%, 1600px);
-      height: 95vh;
       border-radius: 20px;
       margin-right: 10px;
       border: 0;

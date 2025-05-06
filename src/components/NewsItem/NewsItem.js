@@ -1,10 +1,14 @@
 import { LitElement, html, css } from 'lit'
+
+// import styling
 import { NewsItemStyle } from './NewsItem.style.js';
+import { buttonStyles } from '../../styles/button-styles.js';
+
 import { Events } from '../../events/events.js';
 
 export class NewsItem extends LitElement {
 
-  static styles = [NewsItemStyle];
+  static styles = [NewsItemStyle, buttonStyles];
 
   static properties = {
     newsItem: {type: Object},

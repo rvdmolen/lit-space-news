@@ -8,6 +8,7 @@ import { ApiService } from '../../services/api-service.js';
 
 // Import styling
 import { NewsListTaskStyle } from './NewsListTask.style.js';
+import { buttonStyles } from '../../styles/button-styles.js';
 
 // Import custom components
 import '../NewsItem/NewsItem.js';
@@ -24,7 +25,7 @@ export class NewsListTask extends LoadingMixin(LitElement) {
   #next;
   #spaceNewsTask;
 
-  static styles = [NewsListTaskStyle];
+  static styles = [NewsListTaskStyle, buttonStyles];
 
   get dom() {
     return {
