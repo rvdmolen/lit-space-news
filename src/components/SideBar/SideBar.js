@@ -1,13 +1,16 @@
 // Import library dependencies
-import { LitElement, css, html } from 'lit'
+import {LitElement, html} from 'lit'
 
 // Import components
 import '../Spinner/Spinner.js';
 
+// Import services
+import {ApiService} from '../../services/api-service.js';
+
 // Import styling
-import { SideBarStyle } from './SideBar.style.js';
-import { SignalService } from '../../services/state-service.js';
-import { when } from 'lit/directives/when.js';
+import {SideBarStyle} from './SideBar.style.js';
+import {SignalService} from '../../services/state-service.js';
+import {when} from 'lit/directives/when.js';
 
 export class SideBar extends LitElement {
 
@@ -20,11 +23,11 @@ export class SideBar extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    SignalService.createSignalWatcher(SignalService.openSideBarSignal, (data) => {
+    SignalService.createSignalWatcher(SignalService.openSideBarSignal, async (data) => {
       this._loading = true;
-      this.#processData(data);
       this.#openSideBar(data);
-      // this._loading = false;
+      await this.#processData(data);
+      this._loading = false;
     });
   }
 
@@ -34,9 +37,11 @@ export class SideBar extends LitElement {
     };
   }
 
-  #processData(data) {
-    const { detail: { newsItemId } } = data;
+  async #processData(data) {
+    const {detail: {newsItemId}} = data;
     this._newsItemId = newsItemId;
+    const result = await ApiService.fetchNewsItem(newsItemId);
+    console.log(result);
   }
 
   #openSideBar({detail}) {
@@ -47,7 +52,9 @@ export class SideBar extends LitElement {
   }
 
   #closeSideBar(e) {
-    if (e) {e.preventDefault();}
+    if (e) {
+      e.preventDefault();
+    }
     const dialog = this.dom.dialog;
     dialog.showModal();
     dialog.classList.add('hidden');
@@ -67,12 +74,13 @@ export class SideBar extends LitElement {
   render() {
     return html`
       <dialog @keydown=${this.#onEsc}>
-        <form >
+        <form>
           <header>
             <h2>Dialog header</h2>
           </header>
           <content>
-            ${when(this._loading,() =>
+            ${when(this._loading,
+              () =>
                 html`
                   <p></p>
                   <lit-space-news-spinner></lit-space-news-spinner>
@@ -82,7 +90,7 @@ export class SideBar extends LitElement {
                   <p>Content goes here</p>
                   <p>${this._newsItemId}</p>
                 `
-              )}
+            )}
           </content>
           <footer>
             <button @click="${this.#closeSideBar}">Close</button>

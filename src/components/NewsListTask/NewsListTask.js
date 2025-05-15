@@ -1,23 +1,23 @@
 // Import library dependencies
-import { html, LitElement } from 'lit'
-import { when } from 'lit/directives/when.js';
-import { Task } from '@lit/task';
+import {html, LitElement} from 'lit'
+import {when} from 'lit/directives/when.js';
+import {Task} from '@lit/task';
 
 // Import Services
-import { ApiService } from '../../services/api-service.js';
+import {ApiService} from '../../services/api-service.js';
 
 // Import styling
-import { NewsListTaskStyle } from './NewsListTask.style.js';
-import { buttonStyles } from '../../styles/button-styles.js';
+import {NewsListTaskStyle} from './NewsListTask.style.js';
+import {buttonStyles} from '../../styles/button-styles.js';
 
 // Import custom components
 import '../NewsItem/NewsItem.js';
 import '../LoadingOverlay/LoadingOverlay.js';
 import '../Notification/Notification.js';
-import { LoadingMixin } from '../../mixins/loading/LoadingMixin.js';
+import {LoadingMixin} from '../../mixins/loading/LoadingMixin.js';
 
 // Store
-import { SignalService } from '../../services/state-service.js';
+import {SignalService} from '../../services/state-service.js';
 
 export class NewsListTask extends LoadingMixin(LitElement) {
   #intersectionObserver;
@@ -42,18 +42,17 @@ export class NewsListTask extends LoadingMixin(LitElement) {
   constructor() {
     super();
     this.#news = [];
-    this.#intersectionObserver = new IntersectionObserver(this.handleIntersectionQuotaCard.bind(this), { threshold: 0.5 });
+    this.#intersectionObserver = new IntersectionObserver(this.handleIntersectionQuotaCard.bind(this), {threshold: 0.5});
     this.#spaceNewsTask = new Task(this, {
       task: async ([searchString, offset = 10], {signal}) => {
-        // const response = await fetch(ApiService.makeRequest(searchString), {signal: AbortSignal.timeout( 500)});
-        const response = await fetch(ApiService.makeRequest(searchString, offset));
-        if (!response.ok) {
-          throw new Error(response.status);
+        let response;
+        try {
+          response = await ApiService.fetchNews(searchString, offset,  {signal: AbortSignal.timeout( 1000)});
+        } catch (e) {
+          signal.throwIfAborted();
         }
-        signal.throwIfAborted();
 
-        const apiResult = await response.json();
-        const {results, next} = apiResult;
+        const {results, next} = response;
 
         const mergedNews = [...this.#news, ...results];
         this.#next = next;

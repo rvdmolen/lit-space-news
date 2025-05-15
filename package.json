@@ -17,6 +17,6 @@
     "@lit-labs/signals": "^0.1.2"
   },
   "devDependencies": {
-    "vite": "^6.2.1"
+    "vite": "^6.3.5"
   }
 }
