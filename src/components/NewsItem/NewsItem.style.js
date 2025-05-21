@@ -24,8 +24,14 @@ export const NewsItemStyle = css`
   }
 
   .news-list__box:hover {
-    //width: 24.5em;
     background-color: light-dark(var(--grey-light-accent) ,var(--grey-dark-accent));
+  }
+
+  .news-list__box {
+    opacity: 0;
+    animation: fade-in 2s linear forwards   ;
+    animation-timeline: view();
+    animation-range: entry 0% 30%;
   }
 
 
@@ -48,18 +54,17 @@ export const NewsItemStyle = css`
     border-top-right-radius: var(--border-radius);
   }
 
-
-
   .button-container {
     display: flex;
     justify-content: center;
   }
 
-  .news-list__box  {
+  img {
     opacity: 0;
-    animation: fade-in 2s linear forwards   ;
-    animation-timeline: view();
-    animation-range: entry 0% 30%;
+    transition: opacity 1200ms ease-out;
+  }
+  img.loaded {
+    opacity: 1;
   }
 
   @keyframes fade-in {
