@@ -16,6 +16,7 @@ export class SideBar extends LitElement {
 
   static properties = {
     _newsItemId: {type: String, state: true},
+    _newsItem: {type: Object, state: true},
     _loading: {type: Boolean, state: true},
   }
 
@@ -41,6 +42,7 @@ export class SideBar extends LitElement {
     const {detail: {newsItemId}} = data;
     this._newsItemId = newsItemId;
     const result = await ApiService.fetchNewsItem(newsItemId);
+    this._newsItem = result;
     console.log(result);
   }
 
@@ -76,7 +78,7 @@ export class SideBar extends LitElement {
       <dialog @keydown=${this.#onEsc}>
         <form>
           <header>
-            <h2>Dialog header</h2>
+            <h2>${this._newsItem?.title}</h2>
           </header>
           <content>
             ${when(this._loading,
@@ -87,8 +89,9 @@ export class SideBar extends LitElement {
                 `,
               () =>
                 html`
-                  <p>Content goes here</p>
-                  <p>${this._newsItemId}</p>
+                  <p>Author: ${this._newsItem?.authors[0].name}</p>
+                  <img src="${this._newsItem?.image_url}"></img>
+                  <p>${this._newsItem?.summary}</p>
                 `
             )}
           </content>

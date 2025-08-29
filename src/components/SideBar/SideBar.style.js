@@ -36,7 +36,7 @@ export const SideBarStyle = css`
   form > content {
     padding: 1.0em;
     display: grid;
-    grid-template-rows: 30% 70%;
+    grid-template-rows: 10% fit-content(20%) 70%;
   }
 
   form > header {
@@ -98,6 +98,10 @@ export const SideBarStyle = css`
     100% {
       transform: scaleX(0);
     }
+  }
+
+  img {
+    width: 100%;
   }
 
 `;
