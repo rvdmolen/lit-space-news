@@ -2,7 +2,7 @@ import { css } from 'lit';
 
 export const buttonStyles = css`
   .btn {
-    font-size: 1.1rem;
+    font-size: var(--fs-400);
     padding: 0.7rem 1.5rem;
     border-radius: 0.3rem;
     border: none;
@@ -25,11 +25,23 @@ export const buttonStyles = css`
     bottom: 0.5rem;
     background-color: transparent;
     color: light-dark(var(--font-color-light), var(--font-color-dark));
-
     cursor: pointer;
     border-top-width: 1px;
     border-top-style: solid;
     border-top-color: var(--grey-border);
-    width: 75%;
+  }
+
+  .btn-black {
+    padding: 0.5rem 1.5rem;
+    cursor: pointer;
+    background-color2: var(--grey-dark);
+    background-color: light-dark(var(--blue), var(--grey-light-dark));
+
+    color: var(--white);
+    border: none;
+    height: 43px;
+    border-radius: 8px;
+    font-size: var(--fs-300);
+    font-weight: 700;
   }
 `

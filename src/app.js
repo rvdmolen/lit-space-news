@@ -1,13 +1,15 @@
 // Import library dependencies
 import { LitElement, css, html } from 'lit';
-import { classMap } from 'lit/directives/class-map.js';
 
 // Import custom components
 import './components/Banner/Banner.js';
 import './components/Header/Header.js';
+import './components/Footer/Footer.js';
 import './components/NewsList/NewsList.js';
 import './components/NewsListTask/NewsListTask.js';
 import './components/SideBar/SideBar.js';
+import './components/ThemeSwitcher/ThemeSwitcher.js';
+import './components/Toast/Toast.js';
 
 // Store
 import { SignalService } from './services/state-service.js';
@@ -76,7 +78,6 @@ export class LitSpaceNews extends LitElement {
           justify-content: right;
         }
       }
-
     `
   }
 
@@ -108,12 +109,11 @@ export class LitSpaceNews extends LitElement {
         <lit-space-news-header @search-change="${this.#handleSearchChange}" @theme-change="${this.#handleThemeChange}" ></lit-space-news-header>
         <lit-space-news-sidebar open></lit-space-news-sidebar>
         <main>
-          <lit-space-news-banner></lit-space-news-banner>
-          <lit-space-news-list-task class="astronaut-background ${classMap(classes)}" @open-side-bar="${this.#openSidebar}" id="lit-space-news-list"></lit-space-news-list-task>
+          <lit-space-news-banner @search-change="${this.#handleSearchChange}"></lit-space-news-banner>
+          <lit-space-news-list-task  @open-side-bar="${this.#openSidebar}" id="lit-space-news-list"></lit-space-news-list-task>
         </main>
-      </div>
-      <div class="picture-container">
-        <img src="/assets/as2.webp" aria-label="Image" alt="Image" />
+        <lit-space-news-footer></lit-space-news-footer>
+        <lit-space-news-toast></lit-space-news-toast>
       </div>
     `
   }

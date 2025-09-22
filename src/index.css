@@ -1,37 +1,80 @@
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  font-size: 1rem;
-
   color-scheme: light dark;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
+  /* General colors */
   --purple: #6120d0;
   --blue: #3F9DF2;
   --white: #ffffff;
+  --black: #000;
   --grey-border: rgba(210, 210, 210, 0.75);
+  --grey-dark-border: rgba(132, 117, 117, 0.75);
+  --light-blue-border: #E2E8F0;
+  --purple-gray: #49495c;
 
   /* Light theme */
-  --background-light: #eee;
+  --background-light: #ffffff;
   --font-color-light: #213547;
   --grey-light-accent: #f6f3f3;
 
+
   /* Dark theme */
   --font-color-dark: #FFFFFFDD;
-  --background-dark: #191a1a;
-  --grey-dark-accent: #232525;
-  --grey-dark: #2a2c2c;
-
+  --background-dark: #0b0c2a;
+  --grey-dark-accent: #3f3f4e;
+  --grey-dark: #1a1b3a;
+  --grey-light-dark: rgba(89, 91, 182, 0.75);
   --spin-color: #6120d0;
+
+  /* font-sizes */
+  --fs-900: clamp(5rem, 8vw + 1rem, 9.375rem);
+  --fs-800: 3.5rem;
+  --fs-700: 1.5rem;
+  --fs-600: 1rem;
+  --fs-500: 1rem;
+  --fs-400: 0.9375rem;
+  --fs-300: 0.875rem;
+  --fs-200: 0.5rem;
 }
 
 body {
   margin: 0;
   padding: 0;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-size: var(--fs-400);
+  background-color: light-dark(var(--background-light), var(--background-dark));
 }
+
+@media (min-width: 35em) {
+  /* font-sizes on mdeium screen */
+  body {
+    --fs-800: 5rem;
+    --fs-700: 2.5rem;
+    --fs-600: 1.5rem;
+    --fs-500: 1.15rem;
+    --fs-400: 1rem;
+    --fs-300: 0.975rem;
+  }
+}
+
+@media (min-width: 45em) {
+  /* font-sizes on large screen */
+  body {
+    --fs-800: 6.25rem;
+    --fs-700: 3.5rem;
+    --fs-600: 2rem;
+    --fs-500: 1.45rem;
+    --fs-400: 1.25rem;
+    --fs-300: 1.1rem;
+  }
+}
+
+
+
 
 
 

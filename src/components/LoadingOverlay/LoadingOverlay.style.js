@@ -41,7 +41,7 @@ export const LoadingOverlayStyle = css`
   .la-ball-circus {
     display: block;
     font-size: 0;
-    color: #fff
+    color: var(--white)
   }
 
   .la-ball-circus > div {

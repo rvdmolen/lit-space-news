@@ -67,7 +67,7 @@ export class NewsListTask extends LoadingMixin(LitElement) {
 
   firstUpdated() {
     this.#intersectionObserver.observe(this.dom.footer());
-    this.#spaceNewsTask.run('test');
+    // this.#spaceNewsTask.run('test');
   }
 
   handleIntersectionQuotaCard([footer]) {
@@ -81,7 +81,7 @@ export class NewsListTask extends LoadingMixin(LitElement) {
 
   connectedCallback() {
     super.connectedCallback();
-    SignalService.createSignalWatcher(SignalService.searchSpaceItemSignal, (newValue) => {
+    SignalService.createWatcher(SignalService.searchSpaceItemSignal, (newValue) => {
       this.#spaceNewsTask.run([newValue]);
     });
   }
@@ -103,7 +103,11 @@ export class NewsListTask extends LoadingMixin(LitElement) {
 
   #renderStartMessage() {
     return html`
-
+      <div class="empty-state">
+        <img src="/assets/logo.png" alt="Astronaut Illustration">
+        <h2>No results yet... but the universe is vast!</h2>
+        <p>Start your journey by entering a search term above.</p>
+      </div>
     `
   }
 

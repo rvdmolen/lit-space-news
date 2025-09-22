@@ -33,29 +33,27 @@ export const HeaderStyle = css`
     width: 30px;
   }
 
+  @media (min-width: 35em) {
+    img {
+      width: 35px;
+    }
+  }
+
+  @media (min-width: 45em) {
+    img {
+      width: 45px;
+    }
+  }
+
   .title {
     display: flex;
     gap: 0.5rem;
     flex-grow: 1;
   }
 
-  input {
-    width: 100%;
-    font-size: 1rem;
-    height: 2.5rem;
-    border-radius: 0.375rem;
-    border-width: 1px;
-    border-style: solid;
-    border-image: initial;
-    border-color: #E2E8F0;
-    outline-color: var(--blue);
-    padding: 9px 4px 9px 40px;
-    background: transparent url("/assets/search.svg") no-repeat 13px;
-  }
-
   .buttons {
-    display: flex;
-    justify-content: right;
+    margin-left: auto;
+    align-content: center;
 
     button {
       width: 35px;
@@ -77,4 +75,9 @@ export const HeaderStyle = css`
       background: transparent url("/assets/search-white.svg") no-repeat 13px;
     }
   }
+
+
+
+
+
 `;

@@ -24,7 +24,7 @@ export class SideBar extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    SignalService.createSignalWatcher(SignalService.openSideBarSignal, async (data) => {
+    SignalService.createWatcher(SignalService.openSideBarSignal, async (data) => {
       this._loading = true;
       this.#openSideBar(data);
       await this.#processData(data);

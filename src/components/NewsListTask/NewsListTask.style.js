@@ -19,13 +19,23 @@ export const NewsListTaskStyle = css`
     margin-block: 0;
   }
 
-  .footer {
-    height: 10em;
-    background-color: var(--purple);
-  }
-
   .wrapper {
     width: 25em;
+  }
+
+  .empty-state {
+    display: grid;
+    justify-items: center;
+    margin-top: -170px;
+    width: 100%;
+  }
+
+  .empty-state img {
+    width: 10rem;
+  }
+
+  .empty-state p {
+    font-size: var(--fs-400);
   }
 
 `;

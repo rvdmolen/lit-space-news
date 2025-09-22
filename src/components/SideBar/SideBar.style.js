@@ -14,7 +14,6 @@ export const SideBarStyle = css`
     border-color: var(--grey-border);
   }
 
-
   .hidden {
     animation: slide-out 0.5s ease forwards !important;
   }
@@ -45,12 +44,13 @@ export const SideBarStyle = css`
 
   dialog > form {
     display: grid;
-    grid-template-rows: minmax(25px, max-content) 1fr;
+    grid-template-rows1: minmax(25px, max-content) 1fr;
+    grid-template-rows: fit-content(10%) 1fr;
     height: 100%;
   }
 
   header {
-    background-color: #49495c;
+    background-color: var(--purple-gray);
     color: var(--white);
   }
 
@@ -59,6 +59,7 @@ export const SideBarStyle = css`
     top: 1.35em;
     right: 1.65em;
   }
+
   footer {
     padding: 1.0em;
     text-align: center;
