@@ -2,20 +2,22 @@
 import { LitElement, css, html } from 'lit';
 
 // Import services
-import { toastService } from '../../services/toast-service.js';
+import { toastService } from '../../services/toast.js';
 
 export class Toast extends LitElement {
 
+  #toastSubscription;
+
   connectedCallback() {
     super.connectedCallback();
-    toastService.subscribe((newValue) => {
+    this.#toastSubscription = toastService.subscribe((newValue) => {
       this.#handleToastMessage(newValue);
     });
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    toastService.unsubscribe();
+    this.#toastSubscription.unsubscribe();
   }
 
   #handleToastMessage(message) {

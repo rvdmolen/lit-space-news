@@ -12,8 +12,9 @@ import './components/ThemeSwitcher/ThemeSwitcher.js';
 import './components/Toast/Toast.js';
 
 // Store
-import { SignalService } from './services/state-service.js';
 import { themeManager } from './services/theme-manager.js';
+import { sideBarService } from './services/side-bar.js';
+import { searchService } from './services/search.js';
 
 const COLOR_THEME =  Object.freeze({
   DARK: 'dark',
@@ -87,7 +88,7 @@ export class LitSpaceNews extends LitElement {
   }
 
   async #handleSearchChange({detail}) {
-    SignalService.searchSpaceItemSignal.set(detail.value);
+    searchService.search(detail.value);
   }
 
   #handleThemeChange({detail}) {
@@ -95,8 +96,7 @@ export class LitSpaceNews extends LitElement {
   }
 
   async #openSidebar({detail}) {
-    const current = SignalService.openSideBarSignal.get();
-    SignalService.openSideBarSignal.set({current: !current, detail});
+    sideBarService.open(detail);
   }
 
   render() {

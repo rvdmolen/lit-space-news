@@ -1,8 +1,4 @@
-import { Signal, signal } from '@lit-labs/signals';
-
-
-const searchSpaceItemSignal = signal(undefined);
-const openSideBarSignal = signal(undefined);
+import { Signal } from '@lit-labs/signals';
 
 const createWatcher = (callBackFn, signal) => {
   const watcher = new Signal.subtle.Watcher(async () => {
@@ -13,15 +9,7 @@ const createWatcher = (callBackFn, signal) => {
   return watcher;
 };
 
-export const SignalService = {
-  get searchSpaceItemSignal() {
-    return searchSpaceItemSignal;
-  },
-
-  get openSideBarSignal() {
-    return openSideBarSignal;
-  },
-
+export const SignalWatcher = {
   createWatcher(signal, callBackFn) {
     const watcher = createWatcher(callBackFn, signal);
     watcher.watch(signal);
@@ -32,5 +20,3 @@ export const SignalService = {
     watcher.unwatch(signal);
   }
 };
-
-

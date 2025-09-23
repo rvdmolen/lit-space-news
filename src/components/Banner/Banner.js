@@ -1,7 +1,7 @@
 import { LitElement, css, html } from 'lit'
 import { BannerStyle } from './Banner.style.js';
 import { inputStyles } from '../../styles/input-styles.js';
-import { toastService } from '../../services/toast-service.js';
+import { toastService } from '../../services/toast.js';
 import { Events } from '../../events/events.js';
 
 export class Banner extends LitElement {

@@ -9,8 +9,8 @@ import {ApiService} from '../../services/api-service.js';
 
 // Import styling
 import {SideBarStyle} from './SideBar.style.js';
-import {SignalService} from '../../services/state-service.js';
 import {when} from 'lit/directives/when.js';
+import { sideBarService } from '../../services/side-bar.js';
 
 export class SideBar extends LitElement {
 
@@ -24,12 +24,17 @@ export class SideBar extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    SignalService.createWatcher(SignalService.openSideBarSignal, async (data) => {
+    sideBarService.subscribe(async (data) => {
       this._loading = true;
-      this.#openSideBar(data);
+      this.#openSideBar();
       await this.#processData(data);
       this._loading = false;
     });
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    sideBarService.unsubscribeAll();
   }
 
   get dom() {
@@ -39,14 +44,14 @@ export class SideBar extends LitElement {
   }
 
   async #processData(data) {
-    const {detail: {newsItemId}} = data;
+    const {newsItemId} = data;
     this._newsItemId = newsItemId;
     const result = await ApiService.fetchNewsItem(newsItemId);
     this._newsItem = result;
     console.log(result);
   }
 
-  #openSideBar({detail}) {
+  #openSideBar() {
     const dialog = this.dom.dialog;
     dialog.classList.remove('hidden');
     dialog.showModal();

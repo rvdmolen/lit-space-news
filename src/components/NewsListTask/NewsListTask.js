@@ -17,13 +17,14 @@ import '../Notification/Notification.js';
 import {LoadingMixin} from '../../mixins/loading/LoadingMixin.js';
 
 // Store
-import {SignalService} from '../../services/state-service.js';
+import { searchService } from '../../services/search.js';
 
 export class NewsListTask extends LoadingMixin(LitElement) {
   #intersectionObserver;
   #news;
   #next;
   #spaceNewsTask;
+  #searchSubscription
 
   static styles = [NewsListTaskStyle, buttonStyles];
 
@@ -67,7 +68,6 @@ export class NewsListTask extends LoadingMixin(LitElement) {
 
   firstUpdated() {
     this.#intersectionObserver.observe(this.dom.footer());
-    // this.#spaceNewsTask.run('test');
   }
 
   handleIntersectionQuotaCard([footer]) {
@@ -81,9 +81,14 @@ export class NewsListTask extends LoadingMixin(LitElement) {
 
   connectedCallback() {
     super.connectedCallback();
-    SignalService.createWatcher(SignalService.searchSpaceItemSignal, (newValue) => {
+    this.#searchSubscription = searchService.subscribe((newValue) => {
       this.#spaceNewsTask.run([newValue]);
     });
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.#searchSubscription.unsubscribe();
   }
 
   #renderNewsList(news) {
